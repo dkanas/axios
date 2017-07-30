@@ -97,4 +97,15 @@ describe('instance', function () {
       }, 100);
     });
   });
+
+  it('should not override headers on previously created instances when creating a new one', function (done) {
+    const baseURL = '';
+
+    const first = axios.create({ baseURL });
+    first.defaults.headers.common.authorization = 'foo';
+    const second = axios.create({ baseURL });
+    second.defaults.headers.common.authorization = 'bar';
+
+    expect(first.defaults.headers.common.authorization).toEqual('foo');
+  });
 });
